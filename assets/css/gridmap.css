@@ -1,0 +1,71 @@
+#grid-container {
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    transform: rotate(90deg);
+}
+
+.grid-map-transform {
+    -webkit-transform: translateX(0px) translateY(0px) translateZ(0px) rotateX(45deg) rotateY(0deg) rotateZ(0deg);
+    -webkit-transform-origin-x: 50%;
+    -webkit-transform-origin-y: 50%;
+}
+
+.base-grid {
+    border-bottom:1px solid #ccc;
+    border-right:1px solid #ccc;
+}
+.grid-image {
+    position:absolute;
+    transform: rotateZ(-90deg);
+}
+
+.base-grid-marker{
+    position:absolute;
+    background: rgba(85,255,28,0.1) !important;
+    -webkit-box-shadow: inset 0px 0px 15px -6px rgb(233, 255, 7);
+    -moz-box-shadow: inset 0px 0px 15px -6px rgba(233,255,28,1);
+    box-shadow: inset 0px 0px 15px -6px rgba(233,255,28,1);
+    border:1px solid yellowgreen;
+}
+
+
+#grid-container .w{
+    background: #A19C73;
+    float: left;
+    z-index: 1;
+    cursor: pointer;
+}
+
+#grid-container .b{
+    background: #333;
+    float: left;
+    z-index: 1;
+    cursor: pointer;
+}
+
+#grid-container .u{
+    background: #333;
+    float: left;
+    z-index: 1;
+    cursor: pointer;
+}
+#grid-container .d{
+    background: #333;
+    float: left;
+    z-index: 1;
+    cursor: pointer;
+}
+
+#grid-container .player{
+    background-image: url("../img/car_top.png");
+    position: absolute;
+    z-index: 3;
+}
+
+#grid-container .exit{
+    background-image: url("../img/warp.png");
+    position: absolute;
+    z-index: 2;
+}
