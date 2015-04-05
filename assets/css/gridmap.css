@@ -12,10 +12,7 @@
     -webkit-transform-origin-y: 50%;
 }
 
-.base-grid {
-    border-bottom:1px solid #ccc;
-    border-right:1px solid #ccc;
-}
+
 .grid-image {
     position:absolute;
     transform: rotateZ(-90deg);
@@ -39,7 +36,10 @@
 }
 
 #grid-container .b{
-    background: #333;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
     float: left;
     z-index: 1;
     cursor: pointer;
@@ -68,4 +68,50 @@
     background-image: url("../img/warp.png");
     position: absolute;
     z-index: 2;
+}
+
+.road-01{
+    background: url("../img/road/road_01.jpg") no-repeat center center ;
+}
+.road-02{
+    background: url("../img/road/road_02.jpg") no-repeat center center ;
+}
+.road-03{
+    background: url("../img/road/road_03.jpg") no-repeat center center ;
+}
+.road-04{
+    background: url("../img/road/road_04.jpg") no-repeat center center ;
+}
+.road-05{
+    background: url("../img/road/road_05.jpg") no-repeat center center ;
+}
+.road-06{
+    background: url("../img/road/road_06.jpg") no-repeat center center ;
+}
+.road-07{
+    background: url("../img/road/road_07.jpg") no-repeat center center ;
+}
+.road-08{
+    background: url("../img/road/road_08.jpg") no-repeat center center ;
+}
+.road-09{
+    background: url("../img/road/road_09.jpg") no-repeat center center ;
+}
+.road-10{
+    background: url("../img/road/road_10.jpg") no-repeat center center ;
+}
+.road-11{
+    background: url("../img/road/road_11.jpg") no-repeat center center ;
+}
+.road-12{
+    background: url("../img/road/road_12.jpg") no-repeat center center ;
+}
+.road-13{
+    background: url("../img/road/road_13.jpg") no-repeat center center ;
+}
+.road-14{
+    background: url("../img/road/road_14.jpg") no-repeat center center ;
+}
+.road-15{
+    background: url("../img/road/road_15.jpg") no-repeat center center ;
 }

@@ -4,10 +4,13 @@ Backbone.widget({
     model: [],
     rowCount: 4,
     columnCount: 4,
+    rowWidthPx: 0,
+    roadTiles: [],
+
 
     events: {
-        'mouseenter .base-grid' : 'showSelection',
-        'mouseleave .base-grid' : 'hideSelection'
+        'mouseenter .base-grid': 'showSelection',
+        'mouseleave .base-grid': 'hideSelection'
     },
 
     loaded: function () {
@@ -26,10 +29,10 @@ Backbone.widget({
         })
     },
 
-    setGridSize: function(){
+    setGridSize: function () {
         this.boxSize = Math.floor(this.$el.find('#grid-container').width() / (this.columnCount * 2 + 1));
-        this.rowWidthPx = (this.columnCount * 2 + 1)* this.boxSize,
-        this.rowHeight = this.boxSize;
+        this.rowWidthPx = (this.columnCount * 2 + 1) * this.boxSize,
+            this.rowHeight = this.boxSize;
     },
 
     initializeMap: function () {
@@ -41,43 +44,144 @@ Backbone.widget({
             'height': this.boxSize,
             'background-size': this.boxSize + 'px ' + this.boxSize + 'px'
         });
-        $('#grid-container').closest('.white-background').height((this.rowCount*2 )*this.boxSize)
+        $('#grid-container').closest('.white-background').height((this.rowCount * 2 ) * this.boxSize)
 
         $('#grid-container').find('.b, .w').addClass('base-grid');
-        this.renderScene();
 
-        $('#grid-container').find('.blockMaze').append('<div class="player"></div>');
-        $('#grid-container').find('.player').css({
-            'width': this.boxSize,
-            'height': this.boxSize,
-            'top': this.boxSize,
-            'left': '0px',
-            'background-size': this.boxSize + 'px ' + this.boxSize + 'px'
-        });
+
+        var mapMatrix = this.getMapMatrix(9, 9);
+        this.mapTiles(mapMatrix);
+        this.renderScene();
 
     },
 
-    renderScene: function(){
-        this.$el.find('.w').each(function(){
+
+    getMapMatrix: function (rowCount, columnCount) {
+        //columnCount = 9;
+        var mapMatrix = [];
+
+        var $tiles = this.$el.find('#grid-container').find('.base-grid');
+        var tilesIndex = 0;
+        for (var i = 0; i < columnCount; i++) {
+            mapMatrix[i] = [];
+            for (var j = 0; j < rowCount; j++) {
+                if ($($tiles[tilesIndex]).hasClass('w')) {
+                    mapMatrix[i][j] = 0;
+                } else mapMatrix[i][j] = 1;
+
+                tilesIndex++;
+            }
+        }
+
+        return mapMatrix;
+    },
+
+    mapTiles: function (mapMatrix) {
+
+        var roadTiles = [];
+        for (var i = 0; i < mapMatrix.length; i++) {
+            console.log('Map row: ', mapMatrix[i].toString());
+            for (var j = 0; j < mapMatrix[i].length; j++) {
+                var currentTile = mapMatrix[i][j]
+                if (currentTile == 1) {
+                    var roadTile = [];
+                    mapMatrix[i][j + 1] ? roadTile.push(mapMatrix[i][j + 1]) : roadTile.push(0);
+                    mapMatrix[i][j - 1] ? roadTile.push(mapMatrix[i][j - 1]) : roadTile.push(0);
+                    mapMatrix[i - 1][j] ? roadTile.push(mapMatrix[i - 1][j]) : roadTile.push(0);
+                    mapMatrix[i + 1][j] ? roadTile.push(mapMatrix[i + 1][j]) : roadTile.push(0);
+                    roadTiles.push(roadTile);
+                }
+            }
+        }
+
+
+        for (var k = 0; k < roadTiles.length; k++) {
+            this.roadTiles.push(this.getRoadTileImage(roadTiles[k]));
+        }
+        console.log(this.roadTiles.toString())
+    },
+
+    getRoadTileImage: function (tileArray) {
+
+        var roadTileImage = 'road-';
+        var tileArray = tileArray.toString();
+        switch (tileArray) {
+            case '0,0,1,1':
+                roadTileImage += '01';
+                break;
+            case '1,1,0,0':
+                roadTileImage += '02';
+                break;
+            case '1,1,1,1':
+                roadTileImage += '03';
+                break;
+            case '1,0,0,1':
+                roadTileImage += '04';
+                break;
+            case '0,1,0,1':
+                roadTileImage += '05';
+                break;
+            case '0,1,1,0':
+                roadTileImage += '06';
+                break;
+            case '1,0,1,0':
+                roadTileImage += '07';
+                break;
+            case '1,0,1,1':
+                roadTileImage += '08';
+                break;
+            case '0,1,1,1':
+                roadTileImage += '09';
+                break;
+            case '1,1,1,0':
+                roadTileImage += '10';
+                break;
+            case '1,1,0,1':
+                roadTileImage += '11';
+                break;
+            case '0,0,1,0':
+                roadTileImage += '12';
+                break;
+            case '0,0,0,1':
+                roadTileImage += '13';
+                break;
+            case '0,1,0,0':
+                roadTileImage += '14';
+                break;
+            case '1,0,0,0':
+                roadTileImage += '15';
+                break;
+        }
+
+        return roadTileImage;
+    },
+
+    renderScene: function () {
+        this.$el.find('.w').each(function () {
 
             var randomGrass = Math.floor((Math.random() * 5) + 1);
-            var grass = '<img class="grid-image" src="assets/img/textures/'+ 1 +'.jpg"/>'
+            var grass = '<img class="grid-image" src="assets/img/textures/' + 1 + '.jpg"/>'
 
             $(this).append(grass);
 
             var randomHouse = Math.floor((Math.random() * 10) + 1);
-            if(randomHouse < 5){
-                var houseNumber =  Math.floor((Math.random() * 5) + 1);
-                $(this).append('<img class="grid-image house" src="assets/img/houses/h_0'+ houseNumber +'.png"/>');
+            if (randomHouse < 5) {
+                var houseNumber = Math.floor((Math.random() * 5) + 1);
+                $(this).append('<img class="grid-image house" src="assets/img/houses/h_0' + houseNumber + '.png"/>');
             }
+        })
+
+        var context = this;
+        this.$el.find('.b').each(function (index, roadTile) {
+            $(roadTile).addClass(context.roadTiles[index])
         })
 
         this.$el.find('.grid-image').css({'width': this.boxSize, 'height': this.boxSize})
 
     },
 
-    showSelection: function(e){
-        if($(e.currentTarget).find('.grid-image').length > 0){
+    showSelection: function (e) {
+        if ($(e.currentTarget).find('.grid-image').length > 0) {
             $(e.currentTarget).find('.grid-image').append('<div class="base-grid-marker"></div>');
             return;
         }
@@ -85,12 +189,10 @@ Backbone.widget({
         this.$el.find('.base-grid-marker').css({'width': this.boxSize, 'height': this.boxSize})
     },
 
-    hideSelection: function(e){
+    hideSelection: function (e) {
         this.$el.find('.base-grid-marker').remove();
 
     }
-
-
 
 
 }, ['map']);
