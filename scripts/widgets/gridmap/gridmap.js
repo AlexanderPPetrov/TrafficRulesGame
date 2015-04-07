@@ -160,7 +160,7 @@ Backbone.widget({
         this.$el.find('.w').each(function () {
 
             var randomGrass = Math.floor((Math.random() * 5) + 1);
-            var grass = '<img class="grid-image" src="assets/img/textures/' + 1 + '.jpg"/>'
+            var grass = '<img class="grid-image" src="assets/img/grass/' + 1 + '.jpg"/>'
 
             $(this).append(grass);
 
