@@ -31,8 +31,8 @@ Backbone.widget({
 
     setGridSize: function () {
         this.boxSize = Math.floor(this.$el.find('#grid-container').width() / (this.columnCount * 2 + 1));
-        this.rowWidthPx = (this.columnCount * 2 + 1) * this.boxSize,
-            this.rowHeight = this.boxSize;
+        this.rowWidthPx = (this.columnCount * 2 + 1) * this.boxSize;
+        this.rowHeight = this.boxSize;
     },
 
     initializeMap: function () {
@@ -57,7 +57,6 @@ Backbone.widget({
 
 
     getMapMatrix: function (rowCount, columnCount) {
-        //columnCount = 9;
         var mapMatrix = [];
 
         var $tiles = this.$el.find('#grid-container').find('.base-grid');
@@ -85,20 +84,30 @@ Backbone.widget({
                 var currentTile = mapMatrix[i][j]
                 if (currentTile == 1) {
                     var roadTile = [];
+                    // Defined by each of the nearest tiles to Current
+                    //
+                    //      [1]
+                    //   [1][C][1]    -> push [1,1,1,0] -> stands for _|_ road tile
+                    //      [0]
+                    //
+                    //-------------------------------------
                     mapMatrix[i][j + 1] ? roadTile.push(mapMatrix[i][j + 1]) : roadTile.push(0);
                     mapMatrix[i][j - 1] ? roadTile.push(mapMatrix[i][j - 1]) : roadTile.push(0);
                     mapMatrix[i - 1][j] ? roadTile.push(mapMatrix[i - 1][j]) : roadTile.push(0);
                     mapMatrix[i + 1][j] ? roadTile.push(mapMatrix[i + 1][j]) : roadTile.push(0);
+
                     roadTiles.push(roadTile);
                 }
             }
         }
 
+        // If first or last row -> Entrance | and Exit | road tiles
+        roadTiles[0] = [1,1,0,0];
+        roadTiles[roadTiles.length-1] = [1,1,0,0];
 
         for (var k = 0; k < roadTiles.length; k++) {
             this.roadTiles.push(this.getRoadTileImage(roadTiles[k]));
         }
-        console.log(this.roadTiles.toString())
     },
 
     getRoadTileImage: function (tileArray) {
@@ -191,7 +200,6 @@ Backbone.widget({
 
     hideSelection: function (e) {
         this.$el.find('.base-grid-marker').remove();
-
     }
 
 
