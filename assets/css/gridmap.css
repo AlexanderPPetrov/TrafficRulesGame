@@ -1,9 +1,9 @@
 #grid-container {
-    -webkit-transform: rotate(90deg);
-    -moz-transform: rotate(90deg);
-    -o-transform: rotate(90deg);
-    -ms-transform: rotate(90deg);
-    transform: rotate(90deg);
+    /*-webkit-transform: rotate(90deg);*/
+    /*-moz-transform: rotate(90deg);*/
+    /*-o-transform: rotate(90deg);*/
+    /*-ms-transform: rotate(90deg);*/
+    /*transform: rotate(90deg);*/
 }
 
 .grid-map-transform {
@@ -15,7 +15,7 @@
 
 .grid-image {
     position:absolute;
-    transform: rotateZ(-90deg);
+    /*transform: rotateZ(-90deg);*/
 }
 
 .base-grid-marker{
