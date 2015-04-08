@@ -19,6 +19,7 @@ Backbone.widget({
     },
 
     displayInfoText: function (data) {
+        this.$el.find('.info-container').html(data);
         console.log('[Info Container] Display info text: ', data)
     }
 

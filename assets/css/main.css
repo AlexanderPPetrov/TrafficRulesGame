@@ -333,3 +333,26 @@ h1, .h1 {
     text-shadow: 1px 1px 1px #0C3D3F;
     box-shadow: inset -1px 1px 7px 0px rgba(0, 0, 0, 0.3);
 }
+
+
+/*
+
+    Info container css
+
+*/
+
+.info-container {
+    cursor: pointer;
+    font-weight: bold;
+    color: rgb(253, 255, 163);
+    position: absolute;
+    left: 103px;
+    top: 6px;
+    width: 104px;
+    height: 77px;
+    line-height: 16px;
+    text-shadow: 1px 1px 3px #2A2A2A;
+    padding-top: 10px;
+    background: rgba(40, 40, 40, 0.2);
+    border: 1px solid rgba(0,0,0,0.1);
+}

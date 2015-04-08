@@ -9,6 +9,7 @@ Backbone.widget({
 
 
     events: {
+        'click .map-object': 'displayInfoText',
         'mouseenter .base-grid': 'showSelection',
         'mouseleave .base-grid': 'hideSelection'
     },
@@ -86,7 +87,7 @@ Backbone.widget({
                     var roadTile = [];
                     // Defined by each of the nearest tiles to Current
                     //
-                    //      [1]
+                    //      [1]                R L T B / E W N S
                     //   [1][C][1]    -> push [1,1,1,0] -> stands for _|_ road tile
                     //      [0]
                     //
@@ -166,17 +167,23 @@ Backbone.widget({
     },
 
     renderScene: function () {
+        var context = this;
         this.$el.find('.w').each(function () {
 
             var randomGrass = Math.floor((Math.random() * 5) + 1);
             var grass = '<img class="grid-image" src="assets/img/grass/' + 1 + '.jpg"/>'
 
             $(this).append(grass);
-
             var randomHouse = Math.floor((Math.random() * 10) + 1);
             if (randomHouse < 5) {
-                var houseNumber = Math.floor((Math.random() * 5) + 1);
-                $(this).append('<img class="grid-image house" src="assets/img/houses/h_0' + houseNumber + '.png"/>');
+                var houseNumber = context.zeroFill(Math.floor((Math.random() * 5) + 1),2);
+                var template = 'house-' + houseNumber
+                context.renderTemplate({
+                    template: template,
+                    el: $(this),
+                    append: true,
+                    data: {'width': context.boxSize, 'height': context.boxSize}
+                })
             }
         })
 
@@ -200,6 +207,11 @@ Backbone.widget({
 
     hideSelection: function (e) {
         this.$el.find('.base-grid-marker').remove();
+    },
+
+    displayInfoText: function(e){
+        var dataInfo = $(e.currentTarget).attr('data-info');
+        this.fire('DISPLAY_INFO', dataInfo);
     }
 
 

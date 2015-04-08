@@ -116,3 +116,19 @@
 .road-15{
     background: url("../img/road/road_15.jpg") no-repeat center center ;
 }
+
+.map-object {
+    position:absolute;
+    padding:5px;
+
+}
+
+.map-object:hover {
+    padding:0;
+    background: rgba(239, 255, 0, 0.2) !important;
+    -webkit-box-shadow: inset 0px 0px 5px 0px rgb(5, 20, 20);
+    -moz-box-shadow: inset 0px 0px 5px 0px rgb(5, 20, 20);
+    box-shadow: inset 0px 0px 5px 0px rgb(5, 20, 20);
+    border: 5px solid rgba(150,200,200, 0.2);
+    border-radius: 50%;
+}
